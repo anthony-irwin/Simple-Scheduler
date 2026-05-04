@@ -14,4 +14,5 @@ public class Scheduler {
     private static final int PERSON_MIN = 2;
     private static final int PERSON_MAX = 4;
 
+    // TODO: remember to make it so that the time taken to schedule something is then removed if used in a schedule
 }
