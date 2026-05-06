@@ -13,6 +13,8 @@ public class Workshop {
     private int date;
     private List<Person> people;
     private int capacity;
+    private Location location;
+    // TODO: add in combo class functionality
 
     /**
      * Represents a Workshop object.
@@ -24,7 +26,7 @@ public class Workshop {
      * @param date The day of the month the workshop is being hosted
      * @return a Workshop object
      */
-    public Workshop(String teacher, String school, Day day, TimeSlot time, int date) {
+    public Workshop(String teacher, String school, Day day, TimeSlot time, int date, Location location) {
 
         this.teacher = teacher;
         this.school = school;
@@ -33,20 +35,22 @@ public class Workshop {
         this.date = date;
         people = new ArrayList<>();
         this.capacity = Scheduler.WORKSHOP_MAX;
+        this.location = location;
 
     }
 
     /**
-     * Assigns a Person object to the workshop's list of people attending.
+     * Assigns a Person object to the workshop's list of people attending. Removes the time slot from their availability.
      * 
      * @param person The Person object
      * @return true if the person is assigned successfully, and false otherwise
      */
     public boolean assignPerson(Person person) {
 
-        if (people.size() >= capacity && !canAttend(person)) { return false; }
+        if (people.size() >= capacity || !canAttend(person) || people.contains(person)) { return false; }
 
         people.add(person);
+        person.removeTimeSlot(time, day);
         return true;
 
     }
@@ -124,6 +128,22 @@ public class Workshop {
 
     public void setPeople(List<Person> people) {
         this.people = people;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 }
